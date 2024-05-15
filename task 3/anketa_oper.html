@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Task 3 (oper)</title>
+</head>
+<body>
+<script>
+    let lastName = prompt("Введите вашу фамилию:");
+    let firstName = prompt("Введите ваше имя:");
+    let middleName = prompt("Введите ваше отчество:");
+    let age = parseInt(prompt("Введите ваш возраст в годах:"));
+    let isMale = confirm("Ваш пол - мужской?");
+
+    let gender = isMale ? "мужской" : "женский";
+    let pensionAge = isMale ? 63 : 58;
+
+    let pensionStatus = (age >= pensionAge) ? "да" : "нет";
+
+    alert("ФИО: " + lastName + " " + firstName + " " + middleName + "\n" +
+          "возраст, лет: " + age + "\n" +
+          "возраст, дней: " + (age * 365) + "\n" +
+          "пол: " + gender + "\n" +
+          "пенсионный возраст: " + pensionStatus);
+</script>
+</body>
+</html>
