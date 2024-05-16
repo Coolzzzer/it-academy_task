@@ -20,5 +20,3 @@ function mood(colorsCount) {
 }
 
 mood(3);
-
-//cctd

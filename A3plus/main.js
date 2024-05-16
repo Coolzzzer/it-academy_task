@@ -20,32 +20,3 @@ function isPalindrome(str){
 	return true;
 }
 alert(isPalindrome(string))
-
-function ff(){
-	const iddd = 2;
-	console.log("before")
-	iddd = 123;
-	console.log("after")
-}
-function zsd(){
-	asdasd = asdcasd;
-}
-try{
-	ff();	
-	zsd();
-}
-catch(error){
-	if (error.name == "ReferenceError"){
-		console.log("sdcyuasc " + error.name);
-	console.log("sdcyuasc " + error.message);
-	} else if (error.name == "TypeError"){
-		console.log("s dc yua sc " + error.name);
-	console.log("sd cyu asc " + error.message);
-	}
-	else{
-		throw error;
-	}
-}
-finally{
-	console.log("end")
-}
