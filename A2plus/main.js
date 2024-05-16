@@ -1,6 +1,6 @@
-
 "use strick"
 let string = prompt("введите текст");
+
 function removingSpaces(str){
 	let start = 0;
 	let end = str.length - 1;
@@ -28,6 +28,6 @@ function removingSpaces(str){
 			return result;
 		}
 	}
-	
 }
 alert(`!${removingSpaces(string)}!`)
+
