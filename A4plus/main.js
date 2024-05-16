@@ -5,9 +5,9 @@ let newStr = "";
 function removingUnnecessary(str){
 	str = str.toLowerCase();
 	for(let i = 0;i < str.length;i++){
-		if(str[i] == " " || str[i] == "СЊ" || str[i] == "СЉ" 
+		if(str[i] == " " || str[i] == "ь" || str[i] == "ъ" 
 		|| str[i] == "," || str[i] == "." || str[i] == "!" 
-		|| str[i] == "?" || str[i] == "%" || str[i] == "в„–" 
+		|| str[i] == "?" || str[i] == "%" || str[i] == "№" 
 		|| str[i] == ":" || str[i] == ";" || str[i] == "-"){
 		} else{
 			newStr += str[i]
