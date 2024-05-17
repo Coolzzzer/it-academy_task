@@ -18,7 +18,7 @@ function isPalindrome(str){
 	}
 
 	function comparison(newStr){
-		if(newStr.length < 2){
+		if(newStr.length <= 1){
 			return true
 		}else if(newStr[0] === newStr[newStr.length - 1]){
 			return (comparison(newStr.slice(1, newStr.length-1)))
