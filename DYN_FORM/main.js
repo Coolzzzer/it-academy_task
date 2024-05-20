@@ -32,63 +32,60 @@ const formDef2 = [
 	{ caption: 'Зарегистрироваться', kind: 'submit' }
 ];
 
-function buildForm(formTag, formData){
-	const form = document.createElement("form")
-	form.setAttribute("action", "https://fe.it-academy.by/TestForm.php");
-	form.setAttribute("method", "POST")
-	formTag.appendChild(form);
-	formData.forEach(element => {
-		if(element.kind === "submit"){
-			const submit = document.createElement("input");
-			submit.setAttribute("type",element.kind);
-			form.appendChild(submit);
-			submit.setAttribute("value", element.caption)
-			form.appendChild(document.createElement('br'))
-		}else if(element.kind === "combo"){
-			const label = document.createElement("label");
-			const combo = document.createElement("input");
-			combo.setAttribute("type",element.kind);
-			label.textContent = element.label;
-			const variants = document.createElement('select');
-				variants.setAttribute('name', element.name);
-				element.variants.forEach(variant => {
-						const option = document.createElement('option');
-						option.text = variant.text;
-						option.value = variant.value;
-						variants.appendChild(option);
-				});
-				form.appendChild(label);
-				form.appendChild(variants);
-				form.appendChild(document.createElement('br'))
-		}else if(element.kind === "radio"){
-			const label = document.createElement("label");
-			label.textContent = element.label;
-			const variants = document.createElement('span');
-			variants.setAttribute('id', element.name);
-			element.variants.forEach(variant => {
-				const radio = document.createElement("input");
-				radio.setAttribute("type",element.kind);
-				const radioText = document.createElement("label");
-				radio.setAttribute("value",variant.value);
-				radioText.textContent = variant.text;
-				variants.appendChild(radio);
-				variants.appendChild(radioText);
-				});
-				form.appendChild(label);
-				form.appendChild(variants);
-				form.appendChild(document.createElement('br'))
-		}else{
-				const label = document.createElement("label");
-				const input = document.createElement("input");
-				input.setAttribute("type",element.kind);
-				form.appendChild(label);
-				label.textContent = element.label;
-				input.setAttribute("id", element.name);
-				form.appendChild(input);
-				form.appendChild(document.createElement('br'))
-		}
-	});
-	form.appendChild(document.createElement('br'))
+function buildForm(formTag, formData) {
+  const form = document.createElement("form");
+  form.setAttribute("action", "https://fe.it-academy.by/TestForm.php");
+  form.setAttribute("method", "POST");
+  formTag.appendChild(form);
+
+  formData.forEach(element => {
+    if (element.kind === "submit") {
+      const submit = document.createElement("input");
+      submit.setAttribute("type", "submit");
+      submit.setAttribute("value", element.caption);
+      form.appendChild(submit);
+      form.appendChild(document.createElement('br'));
+    } else {
+      const label = document.createElement("label");
+      label.textContent = element.label;
+
+      if (element.kind === "combo") {
+        const select = document.createElement("select");
+        select.setAttribute("name", element.name);
+        element.variants.forEach(variant => {
+          const option = document.createElement("option");
+          option.text = variant.text;
+          option.value = variant.value;
+          select.appendChild(option);
+        });
+        form.appendChild(label);
+        form.appendChild(select);
+      } else if (element.kind === "radio") {
+        const radioSpan = document.createElement("span");
+        element.variants.forEach(variant => {
+          const radio = document.createElement("input");
+          radio.setAttribute("type", "radio");
+          radio.setAttribute("name", element.name); 
+          radio.setAttribute("value", variant.value);
+          const radioLabel = document.createElement("label");
+          radioLabel.textContent = variant.text;
+          radioSpan.appendChild(radio);
+          radioSpan.appendChild(radioLabel);
+        });
+        form.appendChild(label);
+        form.appendChild(radioSpan);
+      } else {
+        const input = document.createElement("input");
+        input.setAttribute("type", element.kind);
+        input.setAttribute("id", element.name);
+        form.appendChild(label);
+        form.appendChild(input);
+      }
+      form.appendChild(document.createElement('br'));
+    }
+  });
+
+  form.appendChild(document.createElement('br'));
 }
 buildForm(form1, formDef1);
 buildForm(form2, formDef2)
