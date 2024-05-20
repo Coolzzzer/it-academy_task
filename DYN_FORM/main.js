@@ -1,5 +1,6 @@
-const form1 = document.querySelector('#form1')
-const form2 = document.querySelector('#form2')
+const form1 = document.querySelector('#form1');
+const form2 = document.querySelector('#form2');
+
 const formDef1 = [
 	{ label: 'Название сайта:', kind: 'text', name: 'sitename' },
 	{ label: 'URL сайта:', kind: 'text', name: 'siteurl' },
@@ -78,12 +79,12 @@ function buildForm(formTag, formData){
 				form.appendChild(document.createElement('br'))
 		}else{
 				const label = document.createElement("label");
-				const el = document.createElement("input");
-				el.setAttribute("type",element.kind);
+				const input = document.createElement("input");
+				input.setAttribute("type",element.kind);
 				form.appendChild(label);
 				label.textContent = element.label;
-				label.setAttribute("name", element.name);
-				form.appendChild(el);
+				input.setAttribute("id", element.name);
+				form.appendChild(input);
 				form.appendChild(document.createElement('br'))
 		}
 	});
