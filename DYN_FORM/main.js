@@ -33,9 +33,9 @@ const formDef2 = [
 
 function buildForm(formTag, formData){
 	const form = document.createElement("form")
-	formTag.appendChild(form);
 	form.setAttribute("action", "https://fe.it-academy.by/TestForm.php");
 	form.setAttribute("method", "POST")
+	formTag.appendChild(form);
 	formData.forEach(element => {
 		if(element.kind === "submit"){
 			const submit = document.createElement("input");
@@ -68,9 +68,8 @@ function buildForm(formTag, formData){
 				const radio = document.createElement("input");
 				radio.setAttribute("type",element.kind);
 				const radioText = document.createElement("label");
-				radio.text = variant.text;
 				radio.setAttribute("value",variant.value);
-				radioText.textContent = radio.text;
+				radioText.textContent = variant.text;
 				variants.appendChild(radio);
 				variants.appendChild(radioText);
 				});
