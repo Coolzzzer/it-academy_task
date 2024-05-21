@@ -16,22 +16,14 @@ var n1=Number.NaN;
 var n2=deepCopy(n1);
 
 function deepCopy(input){
-	let copy = Array.isArray(input) ? [] : {};
-	if(typeof input === "string" || typeof input === "number"|| typeof input === "boolean" || !input){
-		copy = input
-		return copy;
+	if(typeof input !== "object" || input === null){
+		return input
 	}
-	else if(typeof input === "object"){
-		for(let key in input){
+	let copy = Array.isArray(input)?[]:{};
+	for(let key in input){
 			copy[key] = deepCopy(input[key])
-		}
-		return copy;
-	}else if(Array.isArray(input)){
-		array.forEach(element => {
-			copy[element] = deepCopy(input[element])
-		})
-		return copy;
-	}		 
+	}
+	return copy;		 
 }
 function run(){
 	let passed = 0;
@@ -45,11 +37,11 @@ function run(){
 			display.innerHTML += (`<br> ${name} - НЕ ПРОШЕЛ!`)
 		}
 	}
-	test(h1===h2, "h1===h2")
+	test(h1!==h2, "h1===h2")
 	test(h1.a===h2.a, "h1.a===h2.a")
-	test(h1.b===h2.b, "h1.b===h2.b")
+	test(h1.b!==h2.b, "h1.b===h2.b")
 	test(h1.b.b1===h2.b.b1, "h1.b.b1===h2.b.b1")
-	test(h1.c===h2.c, "h1.c===h2.c")
+	test(h1.c!==h2.c, "h1.c===h2.c")
 	test(h1.c[0]===h2.c[0], "h1.c[0]===h2.c[0]")
 	test(h1.d===h2.d, "h1.d===h2.d")
 	test(h1.e===h2.e, "h1.e===h2.e")
@@ -58,12 +50,12 @@ function run(){
 
 	display.innerHTML += `<br>`;
 
-	test(a1===a2, "a1===a2")
+	test(a1!==a2, "a1===a2")
 	test(typeof(a2)===typeof(a1), "typeof(a2)===typeof(a1)")
 	test(a1[0]===a2[0], "a1[0]===a2[0]")
-	test(a1[1]===a2[1], "a1[1]===a2[1]")
+	test(a1[1]!==a2[1], "a1[1]===a2[1]")
 	test(a1[1].b1===a2[1].b1, "a1[1].b1===a2[1].b1")
-	test(a1[2]===a2[2], "a1[2]===a2[2]")
+	test(a1[2]!==a2[2], "a1[2]===a2[2]")
 	test(a1[2][0]===a2[2][0], "a1[2][0]===a2[2][0]")
 	test(a1[3]===a2[3], "a1[3]===a2[3]")
 	test(a1[4]===a2[4], "a1[4]===a2[4]")
@@ -87,11 +79,3 @@ function run(){
 	
 	return display.innerHTML += (`<br><br> Тестов пройдено - ${passed}, тестов не пройдено - ${failed} `);
 }
-
-
-
-
-
-
-
-
