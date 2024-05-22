@@ -19,15 +19,17 @@ function deepCopy(input){
 	if(typeof input !== "object" || input === null){
 		return input
 	}
-	let copy = Array.isArray(input)?[]:{};
-	if(typeof input === "object"){
+	let copy;
+	if(Array.isArray(input)){
+		copy = [];
+		input.forEach(element => {
+			copy.push(deepCopy(element))
+		});
+	}else if(typeof input === "object"){
+		copy = {};
 	for(let key in input){
 			copy[key] = deepCopy(input[key])
 		}
-	}else if(Array.isArray(input)){
-		input.forEach(element => {
-			copy.push(element)
-		});
 	}
 	return copy;		 
 }
