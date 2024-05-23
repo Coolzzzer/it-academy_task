@@ -1,9 +1,9 @@
 function buildWrapper(tagName) {
   function tagBuild(cont, attribute = "") {
-		let string = "";
-    let attributeString = Object.entries(attribute).map(([key, value]) => ` ${key}:'${(key==="title") ? symbolCheck(value, string): value}'`);
-		function symbolCheck(content, mnemonicsString){
-			toString(content)
+		
+    let attributeString = Object.entries(attribute).map(([key, value]) => ` ${key}:'${symbolCheck(value)}'`);
+		function symbolCheck(content){
+			let mnemonicsString = "";
 			for (let i=0;i<content.length;i++){
 				if(content[i] === "<"){
 					mnemonicsString += "&lt;"
@@ -21,7 +21,7 @@ function buildWrapper(tagName) {
 			}
 			return mnemonicsString
 		}
-    return `<${tagName}${attributeString}>${symbolCheck(cont, string)}</${tagName}>`;
+    return `<${tagName}${attributeString}>${symbolCheck(cont)}</${tagName}>`;
   }
   return tagBuild;
 }
