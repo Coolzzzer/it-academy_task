@@ -1,56 +1,54 @@
-function deepComp(value1,value2){
-	if(value1 === value2){
-		return true
-	}
-	if(typeof value1 !== typeof value2){
-		return false
-	}
-	if(value1 === NaN || value2 === NaN){
-		console.log(isNaN(value1)===isNaN(value2))
-		return isNaN(value1)===isNaN(value2)
-	}
-	if ((typeof value1 !== 'object' || value1 === null) || (typeof value2 !== 'object' || value2 === null)) {
+function deepComp(value1, value2) {
+  if (value1 === value2) {
+    return true;
+  }
+
+  if (typeof value1 !== typeof value2) {
+    return false;
+  }
+
+  
+	if (!value1 && !value2) {
+    return true;
+  }else if((typeof value1 !== 'object' || !value1) || (typeof value2 !== 'object' || !value2)){
 		return false;
 	}
-	
-	if(Array.isArray(value1) !== Array.isArray(value2)){
-		return false
-	}
-	
-	if(Array.isArray(value1)){
-		if(value1.length !== value2.length){
-			return false
-		}
-		else{
-			for(let i = 0; i < value1.length; i++){
-				if(!deepComp(value1[i], value2[i])){
-					return false
-				}
-			}
-		}
-	}else{
-		const keys1 = Object.keys(value1).sort();
-		const keys2 = Object.keys(value2).sort();
-		if(keys1.length !== keys2.length){
-			return false
-		}
-		if(keys1.join() !== keys2.join()){
-			return false
-		}
-		for(const key of keys1){
-			if(!deepComp(value1[key], value2[key])){
-				return false
-			}
-		}
-	}
-	
-	return true;
+
+  if (Array.isArray(value1) !== Array.isArray(value2)) {
+    return false;
+  }
+
+  if (Array.isArray(value1)) {
+    if (value1.length !== value2.length) {
+      return false;
+    } else {
+      for (let i = 0; i < value1.length; i++) {
+        if (!deepComp(value1[i], value2[i])) {
+          return false;
+        }
+      }
+    }
+  } else {
+    const keys1 = Object.keys(value1).sort();
+    const keys2 = Object.keys(value2).sort();
+    if (keys1.length !== keys2.length) {
+      return false;
+    }
+    for (const key of keys1) {
+      if (!keys2.includes(key) || !deepComp(value1[key], value2[key])) {
+        return false;
+      }
+    }
+  }
+
+  return true;
 }
+
  function test(value1, value2, condition){
 	if(deepComp(value1, value2) === condition){
 		return console.log(`${value1} и ${value2} - тест прошли`)
 	}else{
-		return console.log(`${value1} и ${value2}                                        тест не прошли!!!`)
+		return console.log(`${value1} и ${value2}                                        !!!тест не прошли!!!`)
 	}
 
  }
