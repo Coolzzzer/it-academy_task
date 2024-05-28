@@ -22,23 +22,23 @@ function deepComp(value1, value2) {
     if (value1.length !== value2.length) {
       return false;
     } else {
-      for (let i = 0; i < value1.length; i++) {
-        if (!deepComp(value1[i], value2[i])) {
-          return false;
-        }
-      }
+      for(let i = 0; i < value1.length;i++){
+				if(deepComp(value1[i], value2[i])){
+					return false
+				}
+			}
     }
   } else {
-    const keys1 = Object.keys(value1).sort();
-    const keys2 = Object.keys(value2).sort();
+    const keys1 = Object.keys(value1);
+    const keys2 = Object.keys(value2);
     if (keys1.length !== keys2.length) {
       return false;
     }
-    for (const key of keys1) {
-      if (!keys2.includes(key) || !deepComp(value1[key], value2[key])) {
-        return false;
-      }
-    }
+    for(const key of keys1){
+			if(!(key in value2)||!deepComp(value1[key],value2[key])){
+				return false
+			}
+		}
   }
 
   return true;
