@@ -100,121 +100,122 @@ function buildForm(formTag, formData) {
 }
 buildForm(form1, formDef1);
 const form = document.forms.form1;
-let validateCheck = [];
 
 const developersField=form.elements.developers;
 developersField.addEventListener('focusout',function(event) {
-	validateInfoForm(developersField, "#e0",'Введите, пожалуйста, данные о разработчиках!',"0", event);
+	validateInfoForm(developersField, "#e0",'Введите данные о разработчиках!', event);
 }, false)
 const sitenameField=form.elements.sitename;
 sitenameField.addEventListener('focusout',function(event) {
-	validateInfoForm(sitenameField, "#e1",'Введите, пожалуйста, название сайта!',"1", event);
+	validateInfoForm(sitenameField, "#e1",'Введите название сайта!', event);
 }, false)
 const siteurlField=form.elements.siteurl;
 siteurlField.addEventListener('focusout',function(event) {
-	validateInfoForm(siteurlField, "#e2",'Введите, пожалуйста, URL сайта!',"2", event);
+	validateInfoForm(siteurlField, "#e2",'Введите URL сайта!', event);
 }, false)
 const dateField=form.elements.date;
 dateField.addEventListener('focusout',function(event) {
-	validateInfoForm(dateField, "#e3",'Введите, пожалуйста, дату запуска сайта!',"3", event);
+	validateInfoForm(dateField, "#e3",'Введите дату запуска сайта!', event);
 }, false)
 const visitorsField=form.elements.visitors;
 visitorsField.addEventListener('focusout',function(event) {
-	validateNum(visitorsField,"#e4",'Введите, пожалуйста, число посетителей в сутки!',"4",event);
+	validateNum(visitorsField,"#e4",'Введите число посетителей в сутки!',event);
 }, false)
 const emailField=form.elements.email;
 emailField.addEventListener('focusout',function(event) {
-	validateInfoForm(emailField, "#e5",'Введите, пожалуйста, ваш E-mail!',"5", event);
+	validateInfoForm(emailField, "#e5",'Введите ваш E-mail!', event);
 }, false)
 const divisionField=form.elements.division;
-divisionField.addEventListener('focusout',function(event) {
-	validateNum(divisionField, "#e6",'Выберите, пожалуйста, рубрику!',"6", event);
+divisionField.addEventListener('change',function(event) {
+	validateNum(divisionField, "#e6",'Выберите рубрику!', event);
 }, false)
 
 const paymentField=form.elements.payment;
+paymentField.forEach(radio => {
+  radio.addEventListener('change', function(event) {
+		event = event || window.event
+    const isValid = Array.from(paymentField).some(radio => radio.checked);
+		const error = document.querySelector("#e7");
+    if (!isValid) {
+			error.textContent = 'Выберите тип размещения!';
+			return false;
+    } else {
+			error.textContent = "";
+			return true;
+    }
+  });
+});
 
 const votesField=form.elements.votes;
-votesField.addEventListener('focusout',function(event) {
-	validateVotes(votesField, "#e8",'Необходимо ваше согласие!',"8", event);
+votesField.addEventListener('change',function(event) {
+	validateVotes(votesField, "#e8",'Необходимо ваше согласие!', event);
 }, false)
 const descriptionField=form.elements.description;
 descriptionField.addEventListener('focusout',function(event) {
-	validateInfoForm(descriptionField, "#e9",'Введите, пожалуйста, описание вашего сайта!',"9", event);
+	validateInfoForm(descriptionField, "#e9",'Введите описание вашего сайта!', event);
 }, false)
 
 
 
-function validateInfoForm(field,id,errorText,symbol,event){
-	event = event || window.event
+function validateInfoForm(field,id,errorText,eo){
+	eo = eo || window.event
 	const value=field.value;
 	const error = document.querySelector(id);
 	if (value.length<=0) {
-		if(validateCheck.includes(symbol)){
-			validateCheck = validateCheck.filter(item => item !== symbol);
-		}
 		error.textContent = errorText;
+		return false;
 	}else{
-		if(!validateCheck.includes(symbol)){
-			validateCheck.push(symbol);
-		}
 		error.textContent = "";
+		return true;
 	}
 }
-function validateNum(field,id,errorText,symbol,event){
-	event = event || window.event
+function validateNum(field,id,errorText,eo){
+	eo = eo || window.event
 	const value=parseInt(field.value.trim());
 	const error = document.querySelector(id);
 	if (!value) {
-		if(validateCheck.includes(symbol)){
-			validateCheck = validateCheck.filter(item => item !== symbol);
-		}
 		error.textContent = errorText;
+		return false;
 	}else{
-		if(!validateCheck.includes(symbol)){
-			validateCheck.push(symbol);
-		}
+
 		error.textContent = "";
+		return true;
 	}
 }
-function validateVotes(field,id,errorText,symbol,event){
-	event = event || window.event
+function validateVotes(field,id,errorText,eo){
+	eo = eo || window.event
 	const error = document.querySelector(id);
 	if (!field.checked) {
-		if(validateCheck.includes(symbol)){
-			validateCheck = validateCheck.filter(item => item !== symbol);
-		}
 		error.textContent = errorText;
+		return false;
 	}else{
-		if(!validateCheck.includes(symbol)){
-			validateCheck.push(symbol);
-		}
 		error.textContent = "";
+		return true;
 	}
 }
 
 const submit=form.elements.submit;
 
-submit.addEventListener("click",function(event){
-	event = event || window.event;
+submit.addEventListener("click",function(eo){
+	eo = eo || window.event;
 	try{
-		let validateSymbol = "0123456789";
-		let validateTest = validateCheck.sort().join("");;
-		if(validateTest != validateSymbol){
-			event.preventDefault();
-			validateInfoForm(developersField, "#e0",'Введите, пожалуйста, данные о разработчиках!',"0", event);
-			validateInfoForm(sitenameField, "#e1",'Введите, пожалуйста, название сайта!',"1", event);
-			validateInfoForm(siteurlField, "#e2",'Введите, пожалуйста, URL сайта!',"2", event);
-			validateInfoForm(dateField, "#e3",'Введите, пожалуйста, дату запуска сайта!',"3", event);
-			validateNum(visitorsField,"#e4",'Введите, пожалуйста, число посетителей в сутки!',"4",event);
-			validateInfoForm(emailField, "#e5",'Введите, пожалуйста, ваш E-mail!',"5", event);
-			validateNum(divisionField, "#e6",'Выберите, пожалуйста, рубрику!',"6", event);
-			validateNum(paymentField, "#e7",'Укажите, пожалуйста, тип размещения!',"7", event);
-			validateVotes(votesField, "#e8",'Необходимо ваше согласие!',"8", event)
-			validateInfoForm(descriptionField, "#e9",'Введите, пожалуйста, описание вашего сайта!',"9", event);
+		let validateTest = 0;
+		validateInfoForm(descriptionField, "#e9",'Введите описание вашего сайта!', eo)? validateTest++:descriptionField.focus();
+		validateVotes(votesField, "#e8",'Необходимо ваше согласие!', eo)? validateTest++:votesField.focus();
+		validateNum(paymentField, "#e7",'Выберите тип размещения!', eo)? validateTest++:votesField.focus();
+		validateNum(divisionField, "#e6",'Выберите рубрику!', eo)? validateTest++:divisionField.focus();
+		validateInfoForm(emailField, "#e5",'Введите ваш E-mail!', eo)? validateTest++:emailField.focus();
+		validateNum(visitorsField,"#e4",'Введите число посетителей в сутки!',eo)? validateTest++:visitorsField.focus();
+		validateInfoForm(dateField, "#e3",'Введите дату запуска сайта!', eo)? validateTest++:dateField.focus();
+		validateInfoForm(siteurlField, "#e2",'Введите URL сайта!', eo)? validateTest++:siteurlField.focus();
+		validateInfoForm(sitenameField, "#e1",'Введите, название сайта!', eo)? validateTest++:sitenameField.focus();
+		validateInfoForm(developersField, "#e0",'Введите данные о разработчиках!', eo)? validateTest++:developersField.focus();
+		if(validateTest < 10 ){
+			eo.preventDefault();
 		}
 	}catch(ex){
 		console.log(ex);
 		alert('Извините, что-то пошло не так, неожиданный сбой! Пересмотрите заполнение формы, возможно, это всё из-за вас!');
-		event.preventDefault()
+		eo.preventDefault()
 	}
 },false)
