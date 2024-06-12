@@ -12,14 +12,21 @@
 	<img src="http://fe.it-academy.by/Sites/0000007/No_smoking.png" style="padding-left: 50px">
 	<script>
 		const imgs = document.querySelectorAll("img");
+		let startX = [];
+		let startY = [];
+		let index = 0;
+		for(let i = 0; i < imgs.length; i++){
+			startX.push(imgs[i].offsetLeft);
+			startY.push(imgs[i].offsetTop)
+		}			
 		let shiftX, shiftY;
 		let zIndexCounter = 1;
-		let imgStartLocation = 0;
 		imgs.forEach(img =>{
-			img.style.position = 'absolute';
-			imgStartLocation = imgStartLocation + 150;
-			img.style.left = imgStartLocation + "px";
 			img.style.cursor = 'grab';
+			img.style.position = "absolute";
+			img.style.top = startY[index] + "px";
+			img.style.left = startX[index] + "px";
+			index++;
 			img.addEventListener("mousedown", function(event){
 				event = event || window.event;
 				img.style.cursor = 'grabbing';
@@ -28,16 +35,16 @@
 				shiftX = event.clientX - img.getBoundingClientRect().left;
 				shiftY = event.clientY - img.getBoundingClientRect().top;
 				function move(event){
-					img.style.top = event.clientY - shiftY + "px"
-					img.style.left = event.clientX - shiftX + "px"
+					img.style.top = event.clientY - shiftY + "px";
+					img.style.left = event.clientX - shiftX + "px";
 				}
-				img.addEventListener("mousemove", move);
-				img.addEventListener('mouseup', function() {
-					img.removeEventListener('mousemove', move)
-					img.style.cursor = 'grab';
-				});
+				document.addEventListener("mousemove", move);
+				document.addEventListener('mouseup', function() {
+				document.removeEventListener('mousemove', move);
+				img.style.cursor = 'grab';
 			});
+		 });
 		});
-	</script>
+	 </script>
 </body>
 </html>
