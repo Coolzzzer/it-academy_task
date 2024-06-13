@@ -14,16 +14,18 @@
 		const imgs = document.querySelectorAll("img");
 		let startX = [];
 		let startY = [];
+		let width;
 		let index = 0;
+		let shiftX, shiftY;
+		let zIndexCounter = 1;
 		for(let i = 0; i < imgs.length; i++){
 			startX.push(imgs[i].offsetLeft);
 			startY.push(imgs[i].offsetTop)
 		}			
-		let shiftX, shiftY;
-		let zIndexCounter = 1;
 		imgs.forEach(img =>{
 			img.style.cursor = 'grab';
 			img.style.position = "absolute";
+			
 			img.style.top = startY[index] + "px";
 			img.style.left = startX[index] + "px";
 			index++;
