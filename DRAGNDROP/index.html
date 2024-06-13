@@ -11,8 +11,8 @@
 	<img src="http://fe.it-academy.by/Sites/0000007/Man-and-woman.png" width="150">
 	<img src="http://fe.it-academy.by/Sites/0000007/No_smoking.png" style="padding-left: 50px">
 	<script>
-		 window.addEventListener("load", function (event) {
-			const imgs = document.querySelectorAll("img");
+	 window.addEventListener("load", function (event) {
+		const imgs = document.querySelectorAll("img");
 		let startX = [];
 		let startY = [];
 		let index = 0;
@@ -39,15 +39,16 @@
 					img.style.top = event.clientY - shiftY + "px";
 					img.style.left = event.clientX - shiftX + "px";
 				}
+				function remove(){
+					document.removeEventListener('mousemove', move);
+					document.removeEventListener('mouseup', remove);
+					img.style.cursor = 'grab';
+				}
 				document.addEventListener("mousemove", move);
-				document.addEventListener('mouseup', function() {
-				document.removeEventListener('mousemove', move);
-				img.style.cursor = 'grab';
-			});
+				document.addEventListener('mouseup', remove);
 		 });
 		});
-  });
-		
+	});
 	 </script>
 </body>
 </html>
