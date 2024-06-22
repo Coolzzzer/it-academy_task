@@ -106,6 +106,9 @@ function buld(){
 				strVal='0'+strVal;
 		return strVal;
 	}
+
+start();
+function start(){
 	const currTime=new Date();
 	const startSecond = currTime.getSeconds()-30;
 	const startMinute = currTime.getMinutes()-30;
@@ -113,17 +116,12 @@ function buld(){
 	let countSecond = startSecond * (360 / 60);
 	let countMinute = startMinute * (360 / 60);
 	let countHour =(startHour + startMinute / 60) * (360 / 12);
-start();
-function start(){
 	divSecond.style.transformOrigin = "0 0";
 	divSecond.style.rotate=Math.round(countSecond)+'deg';
 	divMinute.style.transformOrigin = "0 0";
 	divMinute.style.rotate=Math.round(countMinute)+'deg';
 	divHour.style.transformOrigin = "0 0";
 	divHour.style.rotate=Math.round(countHour)+'deg';
-	countSecond+=6;
-	countMinute+=0.1;
-	countHour+=0.00166667;
 }
 	setInterval(start,1000);
 
