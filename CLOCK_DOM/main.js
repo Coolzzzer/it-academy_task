@@ -111,7 +111,7 @@ function buld(){
 	const startMinute = currTime.getMinutes()-30;
 	const startHour = currTime.getHours()-5.5;
 	let countSecond = startSecond * (360 / 60);
-	let countMinute = (startMinute + startSecond / 60) * (360 / 60);
+	let countMinute = startMinute * (360 / 60);
 	let countHour =(startHour + startMinute / 60) * (360 / 12);
 start();
 function start(){
