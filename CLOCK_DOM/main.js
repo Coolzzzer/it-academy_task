@@ -10,10 +10,7 @@ btn.textContent = "Создать"
 display.appendChild(input);
 display.appendChild(btn);
 display.appendChild(divError);
-
-
 btn.addEventListener("click", buld)
-
 
 function buld(){
 	let size = input.value;
@@ -87,13 +84,6 @@ function buld(){
 	divWatch.style.fontSize = size/20 + "px"
 	divClock.appendChild(divWatch);
 	
-	setInterval(updateTime,1000);
-	
-	function updateTime() {
-		const currTime=new Date();
-		divWatch.textContent = formatDateTime(currTime);
-		console.log(formatDateTime(currTime));
-	}
 	function formatDateTime(dt) {
 		const hours=dt.getHours();
 		const minutes=dt.getMinutes();
@@ -110,6 +100,8 @@ function buld(){
 start();
 function start(){
 	const currTime=new Date();
+	divWatch.textContent = formatDateTime(currTime);
+	console.log(formatDateTime(currTime));
 	const startSecond = currTime.getSeconds()-30;
 	const startMinute = currTime.getMinutes()-30;
 	const startHour = currTime.getHours()-5.5;
