@@ -46,6 +46,7 @@ function buld(){
 		divElem.style.left=Math.round(elemCenterX-divElem.offsetWidth/2)+'px';
 		divElem.style.top=Math.round(elemCenterY-divElem.offsetHeight/2)+'px';
 		startAngle+=30;
+		divElem.style.fontSize = size/20 + "px"
 		divElem.style.width = size/10 + "px";
 		divElem.style.height = size/10 + "px";
 		divElem.style.alignItems = "center";
@@ -83,14 +84,15 @@ function buld(){
 	divWatch.style.alignItems = "center";
 	divWatch.style.justifyContent = "center";
 	divWatch.style.display = "flex";
+	divWatch.style.fontSize = size/20 + "px"
 	divClock.appendChild(divWatch);
 	
 	setInterval(updateTime,1000);
 	
 	function updateTime() {
 		const currTime=new Date();
-		const currTimeStr=formatDateTime(currTime);
-		divWatch.textContent = currTimeStr;
+		divWatch.textContent = formatDateTime(currTime);
+		console.log(formatDateTime(currTime));
 	}
 	function formatDateTime(dt) {
 		const hours=dt.getHours();
@@ -105,16 +107,14 @@ function buld(){
 		return strVal;
 	}
 	const currTime=new Date();
-	const startSecond = currTime.getSeconds()-29;
+	const startSecond = currTime.getSeconds()-30;
 	const startMinute = currTime.getMinutes()-30;
 	const startHour = currTime.getHours()-5.5;
 	let countSecond = startSecond * (360 / 60);
 	let countMinute = (startMinute + startSecond / 60) * (360 / 60);
 	let countHour =(startHour + startMinute / 60) * (360 / 12);
+start();
 function start(){
-	const currTime=new Date();
-	const currTimeStr=formatDateTime(currTime);
-	console.log(currTimeStr);
 	divSecond.style.transformOrigin = "0 0";
 	divSecond.style.rotate=Math.round(countSecond)+'deg';
 	divMinute.style.transformOrigin = "0 0";
