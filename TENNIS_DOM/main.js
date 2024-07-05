@@ -25,7 +25,8 @@ const rightRacket = document.createElement("div");
 let racketOptions = {
 	posLeftY : gameFieldOptions.sizeY/2+size,
 	posRightY : gameFieldOptions.sizeY/2+size,
-	speedY : 10,
+	speedLeftY : 0,
+	speedRightY : 0,
 	update : function(){
 		leftRacket.style.top = racketOptions.posLeftY  + "px";
 		rightRacket.style.top = racketOptions.posRightY  + "px";
@@ -102,38 +103,59 @@ function run(){
 		if(ballOptions.posY-2.5*size<0){
 			ballOptions.speedY =- ballOptions.speedY;
 		}
+
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		if(!(racketOptions.posLeftY<2.5*size)&&!(racketOptions.posLeftY+size>gameFieldOptions.sizeY)){
+				document.addEventListener('keydown', function(event) {
+					if (event.shiftKey) {
+							racketOptions.speedLeftY =- 10;
+							document.addEventListener('keyup', function(event) {
+								racketOptions.speedLeftY = 0;
+							});
+					}	
+					if (event.ctrlKey){
+						racketOptions.speedLeftY = 10;
+						document.addEventListener('keyup', function(event) {
+							racketOptions.speedLeftY = 0;
+						});
+					}
+				})
+		}else{
+			racketOptions.speedLeftY = 0;
+		}
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		
 		ballOptions.posX+=ballOptions.speedX;
 		ballOptions.posY+=ballOptions.speedY;
+		racketOptions.posLeftY+=racketOptions.speedLeftY;
+		racketOptions.posRightY+=racketOptions.speedRightY;
+		racketOptions.update();
 		ballOptions.update();
 	},50);
 }
 
-document.addEventListener('keydown', function(event) {
-  if (event.shiftKey) {
-		if(racketOptions.posLeftY>2.5*size){
-			racketOptions.posLeftY-=racketOptions.speedY;
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+if ((racketOptions.posRightY > 2.5 * size)&&(racketOptions.posRightY + size < gameFieldOptions.sizeY)){
+	document.addEventListener('keydown', function(event) {
+		if (event.key === 'ArrowUp') {
+			racketOptions.speedRightY = -10;
+			document.addEventListener('keyup', function(event) {
+				racketOptions.speedRightY = 0;
+			});
 		}
-  }
-	if (event.ctrlKey){
-		if(racketOptions.posLeftY+size<gameFieldOptions.sizeY){
-			racketOptions.posLeftY+=racketOptions.speedY;
+		if (event.key === 'ArrowDown') {
+			racketOptions.speedRightY = 10;
+			document.addEventListener('keyup', function(event) {
+				racketOptions.speedRightY = 0;
+			});
 		}
-	}
-	racketOptions.update();
-});
-document.addEventListener('keydown', function(event) {
-	if(event.key === 'ArrowUp'){
-		if(racketOptions.posRightY>2.5*size){
-			racketOptions.posRightY-=racketOptions.speedY;
-		}
-	}
-	if(event.key === 'ArrowDown') {
-		if(racketOptions.posRightY+size<gameFieldOptions.sizeY){
-			racketOptions.posRightY+=racketOptions.speedY;
-		}
-  }
-	racketOptions.update();
-});
+	});
+}else{
+	racketOptions.speedRightY = 0;
+}
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
 run()
 start.addEventListener("click",function(){
 	timer=0;
