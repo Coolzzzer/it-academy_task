@@ -104,56 +104,66 @@ function run(){
 			ballOptions.speedY =- ballOptions.speedY;
 		}
 
-//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		if(!(racketOptions.posLeftY<2.5*size)&&!(racketOptions.posLeftY+size>gameFieldOptions.sizeY)){
-				document.addEventListener('keydown', function(event) {
-					if (event.shiftKey) {
-							racketOptions.speedLeftY =- 10;
-							document.addEventListener('keyup', function(event) {
-								racketOptions.speedLeftY = 0;
-							});
-					}	
-					if (event.ctrlKey){
-						racketOptions.speedLeftY = 10;
-						document.addEventListener('keyup', function(event) {
-							racketOptions.speedLeftY = 0;
-						});
-					}
-				})
-		}else{
-			racketOptions.speedLeftY = 0;
-		}
-//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 		
+
+		function moveLeft(event) {
+			if (event.shiftKey) {
+				racketOptions.speedLeftY =- 5;
+			}	
+			if (event.ctrlKey) {
+				racketOptions.speedLeftY = 5;
+			}	
+			document.addEventListener('keyup', stopLeft);
+		}
+		function stopLeft(){
+			racketOptions.speedLeftY = 0;
+			document.removeEventListener("keydown",moveLeft)
+			document.removeEventListener("keyup",stopLeft)
+		}
+		function moveRight(event) {
+			if (event.key === 'ArrowUp') {
+				racketOptions.speedRightY =- 5;
+			}	
+			if (event.key === 'ArrowDown') {
+				racketOptions.speedRightY = 5;
+			}	
+			document.addEventListener('keyup', stopRight);
+		}
+		function stopRight(){
+			racketOptions.speedRightY = 0;
+			document.removeEventListener("keydown",moveRight)
+			document.removeEventListener("keyup",stopRight)
+		}
+
+
+		if((racketOptions.posLeftY>2.5*size)&&(racketOptions.posLeftY+size<gameFieldOptions.sizeY)){
+			document.addEventListener('keydown', moveLeft);
+			racketOptions.posLeftY+=racketOptions.speedLeftY;
+		}else if(racketOptions.posLeftY>2.5*size){
+			racketOptions.posLeftY-=1;
+		}else if(racketOptions.posLeftY+size<gameFieldOptions.sizeY){
+			racketOptions.posLeftY+=1;
+		}
+
+		if((racketOptions.posRightY > 2.5 * size)&&(racketOptions.posRightY + size < gameFieldOptions.sizeY)){
+			document.addEventListener('keydown', moveRight);
+			racketOptions.posRightY+=racketOptions.speedRightY;
+		}else if(racketOptions.posRightY>2.5*size){
+			racketOptions.posRightY-=1;
+		}else if(racketOptions.posRightY+size<gameFieldOptions.sizeY){
+			racketOptions.posRightY+=1;
+		}
+
 		ballOptions.posX+=ballOptions.speedX;
 		ballOptions.posY+=ballOptions.speedY;
-		racketOptions.posLeftY+=racketOptions.speedLeftY;
-		racketOptions.posRightY+=racketOptions.speedRightY;
 		racketOptions.update();
 		ballOptions.update();
-	},50);
+	},25);
 }
 
-//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-if ((racketOptions.posRightY > 2.5 * size)&&(racketOptions.posRightY + size < gameFieldOptions.sizeY)){
-	document.addEventListener('keydown', function(event) {
-		if (event.key === 'ArrowUp') {
-			racketOptions.speedRightY = -10;
-			document.addEventListener('keyup', function(event) {
-				racketOptions.speedRightY = 0;
-			});
-		}
-		if (event.key === 'ArrowDown') {
-			racketOptions.speedRightY = 10;
-			document.addEventListener('keyup', function(event) {
-				racketOptions.speedRightY = 0;
-			});
-		}
-	});
-}else{
-	racketOptions.speedRightY = 0;
-}
-//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
 
 
 run()
