@@ -9,7 +9,6 @@ const leftBorder = 2*gameField.offsetLeft;
 const count = document.createElement("div");
 const ball = document.createElement("div");
 const size = 30;
-let timer=0;
 let ballOptions = {
 	posX : gameFieldOptions.sizeX/2,
 	posY : gameFieldOptions.sizeY/2 + 2*size,
@@ -79,96 +78,77 @@ function areElementsTouching(element1, element2) {
 					 rect1.bottom < rect2.top || 
 					 rect1.top > rect2.bottom);
 }
-
+function stop(){
+	racketOptions.speedLeftY = 0;
+	racketOptions.speedRightY = 0;
+}
+function move(event) {
+	if (event.key === 'ArrowUp') {
+		racketOptions.speedRightY =- 5;
+	}	
+	if (event.key === 'ArrowDown') {
+		racketOptions.speedRightY = 5;
+	}	
+	if (event.shiftKey) {
+		racketOptions.speedLeftY =- 5;
+	}	
+	if (event.ctrlKey) {
+		racketOptions.speedLeftY = 5;
+	}	
+}
+document.addEventListener('keydown', move);
+document.addEventListener('keyup', stop);
 function run(){
 
-	timer=setInterval(function(){
-		if (areElementsTouching(ball, rightRacket)) {
-			ballOptions.speedX =- ballOptions.speedX;
-		}
-		if(ballOptions.posX+size/1.5>gameFieldOptions.sizeX+leftBorder){
-			ballOptions.speedX=0;
-			ballOptions.speedY=0;
-		}
-		if(ballOptions.posY-size>gameFieldOptions.sizeY){
-			ballOptions.speedY =- ballOptions.speedY;
-		}
-		if (areElementsTouching(ball, leftRacket)) {
-			ballOptions.speedX =- ballOptions.speedX;
-		}
-		if(ballOptions.posX-size/2.5<leftBorder){
-			ballOptions.speedX=0;
-			ballOptions.speedY=0;
-		}
-		if(ballOptions.posY-2.5*size<0){
-			ballOptions.speedY =- ballOptions.speedY;
-		}
+	setInterval(function(){
+	if (areElementsTouching(ball, rightRacket)) {
+		ballOptions.speedX =- ballOptions.speedX;
+	}
+	if(ballOptions.posX+size/1.2>gameFieldOptions.sizeX+leftBorder){
+		ballOptions.speedX=0;
+		ballOptions.speedY=0;
+	}
+	if(ballOptions.posY-size>gameFieldOptions.sizeY){
+		ballOptions.speedY =- ballOptions.speedY;
+	}
+	if (areElementsTouching(ball, leftRacket)) {
+		ballOptions.speedX =- ballOptions.speedX;
+	}
+	if(ballOptions.posX-size/2.4<leftBorder){
+		ballOptions.speedX=0;
+		ballOptions.speedY=0;
+	}
+	if(ballOptions.posY-2.5*size<0){
+		ballOptions.speedY =- ballOptions.speedY;
+	}
 
+	if((racketOptions.posLeftY>2.5*size)&&(racketOptions.posLeftY+size<gameFieldOptions.sizeY)){
+		racketOptions.posLeftY+=racketOptions.speedLeftY;
+	}else if(racketOptions.posLeftY>2.5*size){
+		racketOptions.posLeftY-=1;
+	}else if(racketOptions.posLeftY+size<gameFieldOptions.sizeY){
+		racketOptions.posLeftY+=1;
+	}
 
-		
+	if((racketOptions.posRightY > 2.5 * size)&&(racketOptions.posRightY + size < gameFieldOptions.sizeY)){
+		racketOptions.posRightY+=racketOptions.speedRightY;
+	}else if(racketOptions.posRightY>2.5*size){
+		racketOptions.posRightY-=1;
+	}else if(racketOptions.posRightY+size<gameFieldOptions.sizeY){
+		racketOptions.posRightY+=1;
+	}
 
-		function moveLeft(event) {
-			if (event.shiftKey) {
-				racketOptions.speedLeftY =- 5;
-			}	
-			if (event.ctrlKey) {
-				racketOptions.speedLeftY = 5;
-			}	
-			document.addEventListener('keyup', stopLeft);
-		}
-		function stopLeft(){
-			racketOptions.speedLeftY = 0;
-			document.removeEventListener("keydown",moveLeft)
-			document.removeEventListener("keyup",stopLeft)
-		}
-		function moveRight(event) {
-			if (event.key === 'ArrowUp') {
-				racketOptions.speedRightY =- 5;
-			}	
-			if (event.key === 'ArrowDown') {
-				racketOptions.speedRightY = 5;
-			}	
-			document.addEventListener('keyup', stopRight);
-		}
-		function stopRight(){
-			racketOptions.speedRightY = 0;
-			document.removeEventListener("keydown",moveRight)
-			document.removeEventListener("keyup",stopRight)
-		}
-
-
-		if((racketOptions.posLeftY>2.5*size)&&(racketOptions.posLeftY+size<gameFieldOptions.sizeY)){
-			document.addEventListener('keydown', moveLeft);
-			racketOptions.posLeftY+=racketOptions.speedLeftY;
-		}else if(racketOptions.posLeftY>2.5*size){
-			racketOptions.posLeftY-=1;
-		}else if(racketOptions.posLeftY+size<gameFieldOptions.sizeY){
-			racketOptions.posLeftY+=1;
-		}
-
-		if((racketOptions.posRightY > 2.5 * size)&&(racketOptions.posRightY + size < gameFieldOptions.sizeY)){
-			document.addEventListener('keydown', moveRight);
-			racketOptions.posRightY+=racketOptions.speedRightY;
-		}else if(racketOptions.posRightY>2.5*size){
-			racketOptions.posRightY-=1;
-		}else if(racketOptions.posRightY+size<gameFieldOptions.sizeY){
-			racketOptions.posRightY+=1;
-		}
-
-		ballOptions.posX+=ballOptions.speedX;
-		ballOptions.posY+=ballOptions.speedY;
-		racketOptions.update();
-		ballOptions.update();
+	ballOptions.posX+=ballOptions.speedX;
+	ballOptions.posY+=ballOptions.speedY;
+	racketOptions.update();
+	ballOptions.update();
 	},25);
 }
 
 
 
-
-
 run()
 start.addEventListener("click",function(){
-	timer=0;
 	if(ballOptions.posX-2*gameField.offsetLeft<0){
 		rightCount++;
 	}		
