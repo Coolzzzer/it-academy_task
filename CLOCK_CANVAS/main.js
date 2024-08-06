@@ -112,5 +112,6 @@ function buld(){
 		cvsText.fillText(fullTime,clockCenterX-size/10 , clockCenterY-size/5);
 		console.log(fullTime)
 	}
+	start()
 	setInterval(start,1000);
 }
