@@ -23,12 +23,12 @@ class LocStorageClass{
     return this.obj[key];
   }
   deleteValue(key) {
-		if (!this.obj[key]) {
-			this.saveToLocalStorage()
-      return false;
-    } else {
+    if (this.obj.hasOwnProperty(key)) {
       delete this.obj[key];
+      this.saveToLocalStorage();
       return true;
+    } else {
+      return false;
     }
   }
 	getKeys() {
